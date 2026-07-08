@@ -41,6 +41,8 @@
   .header-grad .emoji{font-size:32px;}
   .header-grad h1{font-size:19px;margin:8px 0 4px;}
   .header-grad p{font-size:13px;opacity:0.92;margin:0;}
+  .question-image{width:100%;display:block;}
+  .screen-image{width:100%;display:block;}
   .section{padding:24px;}
   .intro-list{
     background:#fff5f0;
@@ -258,21 +260,21 @@ const GOAL_ITEMS = [
    質問データ
 ========================================================= */
 const QUESTIONS = [
-  { id:"q1", text:"あなたの性別は？", type:"single",
+  { id:"q1", text:"あなたの性別は？", type:"single", image:"q1-gender.png",
     options:["女性","男性","答えたくない"].map(v=>({label:v,value:v})) },
-  { id:"q2", text:"あなたの年齢は？", type:"single",
+  { id:"q2", text:"あなたの年齢は？", type:"single", image:"q2-age.png",
     options:["19歳以下","20代","30代","40代","50代","60代〜"].map(v=>({label:v,value:v})) },
-  { id:"q3", text:"あなたの職業は？", type:"single",
+  { id:"q3", text:"あなたの職業は？", type:"single", image:"q3-job.png",
     options:["学生（高校生）","学生（大学生以上）","社会人","パート","その他"].map(v=>({label:v,value:v})) },
-  { id:"q4", text:"自分の価値観に近いものは？", type:"single",
+  { id:"q4", text:"自分の価値観に近いものは？", type:"single", image:"q4-values.png",
     options:[
       {label:"バリバリ仕事してとにかくお金をたくさん稼ぎたい！", value:"gogo"},
       {label:"自分や家族の時間を大切にしながらお金の自由も手に入れたい！", value:"balance"},
       {label:"自分のペースでゆっくり無理なく収入を増やしたい！", value:"mypace"},
     ]},
-  { id:"q5", text:"稼いで何をしたいですか？", sub:"1位・2位・3位で選んでください", type:"ranking" },
-  { id:"q6", text:"副業でこうなりたい！！", sub:"できるだけ具体的に書いてください（必須）", type:"text" },
-  { id:"q7", text:"普段の生活で趣味や自分のために「自由に使えるお金」は月々どのくらいありますか？", type:"single",
+  { id:"q5", text:"稼いで何をしたいですか？", sub:"1位・2位・3位で選んでください", type:"ranking", image:"q5-goal.png" },
+  { id:"q6", text:"副業でこうなりたい！！", sub:"できるだけ具体的に書いてください（必須）", type:"text", image:"q6-text.png" },
+  { id:"q7", text:"普段の生活で趣味や自分のために「自由に使えるお金」は月々どのくらいありますか？", type:"single", image:"q7-money.png",
     options:[
       {label:"2〜3万円以上はある（割とある）", value:"enough"},
       {label:"今はあまりないけど、工夫すれば少しなら自由に使えるお金も作れる", value:"a_little"},
@@ -432,6 +434,7 @@ function renderQuestion(){
   }
 
   app.innerHTML = `
+    ${q.image ? `<img src="${q.image}" alt="${q.text}" class="question-image">` : ""}
     <div class="progress-wrap">
       <div class="check-label">STEP ${state.qIndex+1} / ${QUESTIONS.length}</div>
       <div class="dots">${dotsHtml}</div>
@@ -522,11 +525,7 @@ function goNext(){
 
 function renderFinish(){
   app.innerHTML = `
-    <div class="header-grad">
-      <div class="emoji">🎉</div>
-      <h1>回答ありがとうございました！</h1>
-      <p>すべての質問にお答えいただきました。<br>あなたに合った副業の始め方を診断します。</p>
-    </div>
+    <img src="finish.png" alt="回答ありがとうございました" class="screen-image" style="border-radius:0 0 28px 28px;">
     <div class="section">
       <div class="intro-list">
         <div class="intro-item"><div class="intro-num">1</div><p>あなたの<b>価値観・目標・状況</b>を分析しました</p></div>
@@ -558,10 +557,8 @@ function renderResult(){
   ];
 
   app.innerHTML = `
-    <div class="result-hero">
-      <div class="small">診断結果</div>
-      <h2>あなたにオススメの副業は…</h2>
-      <div class="reveal">Instagram × Threads<br>× アフィリエイト</div>
+    <img src="result-hero.png" alt="あなたにオススメの副業はInstagram×Threads×アフィリエイトです" class="screen-image" style="border-radius:0 0 28px 28px;">
+    <div class="result-hero" style="padding-top:20px;padding-bottom:20px;">
       <div class="fit-circle">
         <div class="pct">${r.fit}%</div>
         <div class="lbl">マッチ度</div>
@@ -640,11 +637,8 @@ function renderApply(){
   }).join("");
 
   app.innerHTML = `
-    <div class="header-grad">
-      <div class="emoji">📩</div>
-      <h1>個別相談のお申し込み</h1>
-      <p>あと少しで完了です。<br>下記の項目を入力してください。</p>
-    </div>
+    <img src="apply.png" alt="個別相談のお申し込み" class="screen-image" style="border-radius:0 0 28px 28px;">
+    <p style="text-align:center;font-size:13px;color:var(--sub);padding:16px 24px 0;">あと少しで完了です。下記の項目を入力してください。</p>
     <div class="section">
       <div class="form-field">
         <label>お名前</label>
@@ -754,13 +748,22 @@ function renderConfirm(){
 }
 
 function renderDone(){
-  app.innerHTML = `
-    <div class="header-grad">
-      <div class="emoji">🎊</div>
-      <h1>お申し込みありがとうございました！</h1>
-      <p>内容を確認のうえ、担当より改めてご連絡いたします。<br>今しばらくお待ちください。</p>
-    </div>
-  `;
+  const considerations = (state.application && state.application.considerations) || [];
+  const noConcerns = considerations.includes(CONSIDERATION_OPTIONS[0]);
+
+  if(noConcerns){
+    app.innerHTML = `
+      <img src="done.png" alt="個別相談の申し込みありがとうございます" class="screen-image" style="border-radius:0 0 28px 28px;">
+    `;
+  } else {
+    app.innerHTML = `
+      <div class="header-grad">
+        <div class="emoji">🙏</div>
+        <h1>個別相談のお申し込みありがとうございます</h1>
+        <p>内容を確認して、担当者よりご連絡します。</p>
+      </div>
+    `;
+  }
 }
 
 render();
