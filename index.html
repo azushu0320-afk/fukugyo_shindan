@@ -6,14 +6,15 @@
 <title>あなたにオススメの副業診断</title>
 <style>
   :root{
-    --pink:#e1306c;
-    --purple:#833ab4;
-    --orange:#fd8d32;
-    --bg:#fff8f4;
+    --pink:#c81e6d;
+    --purple:#6a2c9e;
+    --green:#20ac48;
+    --green-dark:#188538;
+    --bg:#faf8fb;
     --card:#ffffff;
     --text:#2d2a32;
     --sub:#8a8590;
-    --line:#f0e5e0;
+    --line:#ece4f0;
   }
   *{box-sizing:border-box;}
   body{
@@ -28,11 +29,11 @@
     margin:0 auto;
     min-height:100vh;
     background:var(--card);
-    box-shadow:0 0 30px rgba(131,58,180,0.08);
+    box-shadow:0 0 30px rgba(106,44,158,0.1);
     padding-bottom:40px;
   }
   .header-grad{
-    background:linear-gradient(135deg,var(--purple),var(--pink) 55%,var(--orange));
+    background:linear-gradient(135deg,var(--purple),var(--pink));
     padding:28px 24px 20px;
     color:#fff;
     text-align:center;
@@ -43,9 +44,28 @@
   .header-grad p{font-size:13px;opacity:0.92;margin:0;}
   .question-image{width:100%;display:block;}
   .screen-image{width:100%;display:block;}
+  .q-header-simple{
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    padding:30px 24px 26px;
+    text-align:center;
+    border-radius:0 0 28px 28px;
+    color:#fff;
+  }
+  .q-icon-badge{
+    width:60px;height:60px;border-radius:50%;
+    background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 14px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.18);
+  }
+  .q-icon-badge svg{width:28px;height:28px;stroke:var(--purple);}
+  .q-header-simple .q-header-title{
+    font-size:18px;
+    font-weight:bold;
+  }
   .section{padding:24px;}
   .intro-list{
-    background:#fff5f0;
+    background:#f7effa;
     border-radius:16px;
     padding:18px 18px;
     margin:20px 0;
@@ -68,9 +88,9 @@
   .btn-primary{
     display:block;width:100%;border:none;border-radius:999px;
     padding:16px;font-size:16px;font-weight:bold;color:#fff;
-    background:linear-gradient(135deg,var(--purple),var(--pink) 60%,var(--orange));
+    background:linear-gradient(135deg,var(--green),var(--green-dark));
     cursor:pointer;margin-top:22px;
-    box-shadow:0 8px 18px rgba(225,48,108,0.3);
+    box-shadow:0 8px 18px rgba(32,172,72,0.35);
   }
   .btn-primary:active{transform:scale(0.98);}
   .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
@@ -82,7 +102,7 @@
   .btn-disabled-look{
     display:block;width:100%;border:none;border-radius:999px;
     padding:16px;font-size:16px;font-weight:bold;color:#fff;
-    background:linear-gradient(135deg,var(--purple),var(--pink) 60%,var(--orange));
+    background:linear-gradient(135deg,var(--green),var(--green-dark));
     margin-top:22px;text-align:center;opacity:0.55;
   }
 
@@ -95,7 +115,7 @@
   .dot.done{background:#f3c9d7;}
 
   /* question */
-  .q-wrap{padding:6px 24px 24px;}
+  .q-wrap{padding:20px 24px 24px;}
   .q-num{font-size:12px;color:var(--sub);font-weight:bold;letter-spacing:1px;}
   .q-text{font-size:17px;font-weight:bold;margin:8px 0 4px;}
   .q-sub{font-size:12.5px;color:var(--sub);margin-bottom:18px;}
@@ -109,7 +129,7 @@
   .option:hover{border-color:#f0b8cc;}
   .option.selected{
     border-color:var(--pink);
-    background:linear-gradient(135deg,#fff0f6,#fff8f0);
+    background:linear-gradient(135deg,#fff0f6,#f5eefb);
     font-weight:bold;
   }
   .nav-row{display:flex;gap:10px;margin-top:18px;}
@@ -135,7 +155,7 @@
 
   /* result */
   .result-hero{
-    background:linear-gradient(135deg,var(--purple),var(--pink) 55%,var(--orange));
+    background:linear-gradient(135deg,var(--purple),var(--pink));
     color:#fff;padding:30px 24px 26px;text-align:center;
     border-radius:0 0 28px 28px;
   }
@@ -164,7 +184,7 @@
     font-size:13.5px;color:var(--text);
   }
   .checkbox-option.checked{
-    border-color:var(--pink);background:linear-gradient(135deg,#fff0f6,#fff8f0);
+    border-color:var(--pink);background:linear-gradient(135deg,#fff0f6,#f5eefb);
   }
   .checkbox-option input{margin-top:3px;flex:0 0 auto;}
   .caution-note{
@@ -257,24 +277,37 @@ const GOAL_ITEMS = [
 ];
 
 /* =========================================================
+   質問アイコン（シンプルな線画SVG）
+========================================================= */
+const ICON_PATHS = {
+  q1:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  q2:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  q3:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  q4:'<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+  q5:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  q6:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  q7:'<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4h-4a2 2 0 1 1 0-4h4V7"/>',
+};
+
+/* =========================================================
    質問データ
 ========================================================= */
 const QUESTIONS = [
-  { id:"q1", text:"あなたの性別は？", type:"single", image:"q1-gender.png",
+  { id:"q1", text:"あなたの性別は？", type:"single",
     options:["女性","男性","答えたくない"].map(v=>({label:v,value:v})) },
-  { id:"q2", text:"あなたの年齢は？", type:"single", image:"q2-age.png",
+  { id:"q2", text:"あなたの年齢は？", type:"single",
     options:["19歳以下","20代","30代","40代","50代","60代〜"].map(v=>({label:v,value:v})) },
-  { id:"q3", text:"あなたの職業は？", type:"single", image:"q3-job.png",
+  { id:"q3", text:"あなたの職業は？", type:"single",
     options:["学生（高校生）","学生（大学生以上）","社会人","パート","その他"].map(v=>({label:v,value:v})) },
-  { id:"q4", text:"自分の価値観に近いものは？", type:"single", image:"q4-values.png",
+  { id:"q4", text:"自分の価値観に近いものは？", type:"single",
     options:[
       {label:"バリバリ仕事してとにかくお金をたくさん稼ぎたい！", value:"gogo"},
       {label:"自分や家族の時間を大切にしながらお金の自由も手に入れたい！", value:"balance"},
       {label:"自分のペースでゆっくり無理なく収入を増やしたい！", value:"mypace"},
     ]},
-  { id:"q5", text:"稼いで何をしたいですか？", sub:"1位・2位・3位で選んでください", type:"ranking", image:"q5-goal.png" },
-  { id:"q6", text:"副業でこうなりたい！！", sub:"できるだけ具体的に書いてください（必須）", type:"text", image:"q6-text.png" },
-  { id:"q7", text:"普段の生活で趣味や自分のために「自由に使えるお金」は月々どのくらいありますか？", type:"single", image:"q7-money.png",
+  { id:"q5", text:"稼いで何をしたいですか？", sub:"1位・2位・3位で選んでください", type:"ranking" },
+  { id:"q6", text:"副業でこうなりたい！！", sub:"できるだけ具体的に書いてください（必須）", type:"text" },
+  { id:"q7", text:"普段の生活で趣味や自分のために<br>「自由に使えるお金」は月々どのくらいありますか？", type:"single",
     options:[
       {label:"2〜3万円以上はある（割とある）", value:"enough"},
       {label:"今はあまりないけど、工夫すれば少しなら自由に使えるお金も作れる", value:"a_little"},
@@ -434,13 +467,12 @@ function renderQuestion(){
   }
 
   app.innerHTML = `
-    ${q.image ? `<img src="${q.image}" alt="${q.text}" class="question-image">` : ""}
+    ${ICON_PATHS[q.id] ? `<div class="q-header-simple"><div class="q-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON_PATHS[q.id]}</svg></div><div class="q-header-title">${q.text}</div></div>` : ""}
     <div class="progress-wrap">
       <div class="check-label">STEP ${state.qIndex+1} / ${QUESTIONS.length}</div>
       <div class="dots">${dotsHtml}</div>
     </div>
     <div class="q-wrap">
-      <div class="q-text">${q.text}</div>
       ${q.sub ? `<div class="q-sub">${q.sub}</div>` : ""}
       <div id="optionsWrap">${bodyHtml}</div>
       <div class="nav-row">
