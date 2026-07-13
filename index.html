@@ -860,23 +860,13 @@ function renderConfirm(){
 }
 
 function renderDone(){
-  const considerations = (state.application && state.application.considerations) || [];
-  const noConcerns = considerations.includes(CONSIDERATION_OPTIONS[0]);
-
-  if(noConcerns){
-    app.innerHTML = `
-      <img src="done.png" alt="個別相談の申し込みありがとうございます" class="screen-image" style="border-radius:0 0 28px 28px;">
-      <p class="cta-sub" style="text-align:center;padding:16px 24px 0;">💬 この後、公式LINEからご連絡させていただきます。</p>
-    `;
-  } else {
-    app.innerHTML = `
-      <div class="header-grad">
-        <h1>ご連絡いただきありがとうございます！</h1>
-        <p>内容を確認して、担当者よりご連絡します。</p>
-      </div>
-      <p class="cta-sub" style="text-align:center;padding:16px 24px 0;">💬 この後、公式LINEからご連絡させていただきます。</p>
-    `;
-  }
+  app.innerHTML = `
+    <div class="header-grad">
+      <h1>ご連絡いただきありがとうございます！</h1>
+      <p>内容を確認して、担当者よりご連絡します。</p>
+    </div>
+    <p class="cta-sub" style="text-align:center;padding:16px 24px 0;">💬 この後、公式LINEからご連絡させていただきます。</p>
+  `;
 }
 
 render();
